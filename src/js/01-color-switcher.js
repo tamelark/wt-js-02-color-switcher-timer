@@ -7,21 +7,28 @@ const dataStop = document.querySelector('button[data-stop]');
 const bodyEl = document.querySelector('body');
 
 let timerId = null;
+let isColorChangeEnabled = false; 
+
 dataStop.setAttribute('disabled', true);
 
-// додати код для генерування випадкового кольору
-
 dataStart.addEventListener('click', () => {
-  dataStop.removeAttribute('disabled');
+  dataStop.removeAttribute('disabled');document.addEventListener('click', (event) => {
+  if (isColorChangeEnabled) {
+    bodyEl.style.backgroundColor = getRandomHexColor();
+  }
+});
   timerId = setInterval(() => {
     const color = getRandomHexColor();
     bodyEl.style.backgroundColor = color;
-  }, 1000);
+  }, 100000000);
   dataStart.setAttribute('disabled', true);
+  isColorChangeEnabled = true; 
 });
+
 
 dataStop.addEventListener('click', () => {
   dataStart.removeAttribute('disabled');
   clearInterval(timerId);
   dataStop.setAttribute('disabled', true);
+  isColorChangeEnabled = false; 
 });
